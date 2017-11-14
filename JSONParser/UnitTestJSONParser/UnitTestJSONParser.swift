@@ -46,8 +46,11 @@ class UnitTestJSONParser: XCTestCase {
     }
     
     func testJSONParserCASE4() {
-        let testRawJSONData = " 10, 21, 4, 314, 99, 0, 72 ]"
-        XCTAssertThrowsError(try JSONParser.check(testRawJSONData))
+        let parserTest = JSONParser()
+        let testRawJSONData1 = " 10, 21, 4, 314, 99, 0, 72 ]"
+        let testRawJSONData2 = "123"
+        XCTAssertThrowsError(try parserTest.check(testRawJSONData1))
+        XCTAssertThrowsError(try parserTest.check(testRawJSONData2))
     }
     
 }

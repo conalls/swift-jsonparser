@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONParser {
-    static func check(_ value: String?) throws -> String? {
+    func check(_ value: String?) throws -> String {
         guard let safeValue = value else {
             throw ErrorCode.invalidInputString
         }
@@ -20,7 +20,7 @@ struct JSONParser {
         }
     }
     
-    func makeJSONData(_ value: String) -> JSONData{
+    func makeJSONData(_ value: String) -> JSONData {
         var rawJSON = value
         rawJSON.removeFirst()
         rawJSON.removeLast()
@@ -50,7 +50,7 @@ struct JSONParser {
         return hasStringType(value)
     }
     
-    private func hasStringType(_ value: String) -> String{
+    private func hasStringType(_ value: String) -> String {
         var pureString = value
         pureString.removeFirst()
         pureString.removeLast()
