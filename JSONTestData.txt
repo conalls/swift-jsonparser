@@ -1,0 +1,64 @@
+[{"Lee": true},  [true, 123], false, "Dong"]
+[123,123,123,123,123,"test"]
+[{"Lee": true}, {"Dong": true}],  true, 123, [false, "Dong"]]
+["Lee": true]
+[true, 123, false, "Array", [ "test",123 ] ,true, false, 321, {"Dong" : 234}, [false, "testArrat2"]]
+[ { "name" : "master's course", "opened" : true }, [ "java", "javascript", "swift" ] ]
+
+{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "children" : ["hana", "hayul", "haun] }
+{ "name" : "KIM JUNG", "alias" : "JK", "level" : 5, "married" : true }
+{ "name" : ["KIM JUNG"], "alias" : "JK", "level" : 5, "married" : true }
+
+
+1. Object 분류 패턴
+([^\,\{\}]+)
+
+2. objectCheckPatten
+(([\{])(.[^\[\]]*)([\}]))
+
+3. arrayCheckAndSeparatePattern
+(\{[^\{\}]*\})|(true|false)|(\d+)|(\".+?\")|(:)
+
+4.배열의 중첩을 처리하는 패턴
+(\[[^\[\]]*\])|(\{[^\{\}]*\})|(true|false)|(\d+)|(\".+?\")|(:)|(\[|\])
+배열의 시작과 끝의 [] 를 제거해야 중첩관계로 알 수 있다. 데이터를 분류하여 그룹에 저장함.
+
+5.객체의 중첩을 처리하는 패턴
+(\"[^\"\"]*\")\s*?:\s*?((\[[^\[\]]*\])|(true|false)|(\d+)|(\"[^\"\"]*\")|(\{[^\{\}]*\}))
+((\"[^\"\"]*\")\\s*?:\\s*?((\\[[^\\[\\]]*\\])|(true|false)|(\\d+)|(\"[^\"\"]*\")|(\\{[^\\{\\}]*\\})))|(:)|(\\])
+((\"[^\"\"]*\")\s*?:\s*?((\[[^\[\]]*\])|(true|false)|(\d+)|(\"[^\"\"]*\")|(\{[^\{\}]*\})))|(:)|(\])
+
+객체의 시작과 끝의 {} 를 제외한 데이터를 분류하여 그룹에 저장함.
+
+
+    func appendOpenBracket() -> String {
+        var value = self
+        value.append("[")
+        return value
+    }
+    
+    func appendCloseBracket() -> String {
+        var value = self
+        value.append("]")
+        return value
+    }
+    
+    func appendArrayElement(_ elements: String) -> String {
+        var value = self
+        value.append(elements + ",")
+        return value
+    }
+    
+    func appedObjectElement(_ elements: String) -> String {
+        var value = self
+        value.append(elements + ",\n")
+        return value
+    }
+
+        case let .arrayType(array) :
+            rawJSON = try lexer.listMatches(pattern: arrayPattern, inString: array)
+            try grammarChecker.checkElements(of: rawJSON)
+            
+            let vaildJSON = try makeArrayJSONData(rawJSON)
+            
+            return vaildJSON
